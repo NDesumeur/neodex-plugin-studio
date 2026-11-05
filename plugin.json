@@ -1,9 +1,9 @@
 {
   "id": "neodex.studio",
   "name": "Studio de plugins",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "NDesumeur",
-  "description": "Crée un petit plugin NeoDex sans écrire de code, à partir d'un modèle : jeu de quiz, compteur ou page de liens. Aperçu en direct, et export du plugin complet.",
+  "description": "Crée tes petites applis sans code : fiches de révision, routine du jour, minuteur d'étapes, suivi chiffré, tirage au sort, comptes à rebours, quiz… Widget sur l'accueil, rappels, partage par code.",
   "icon": "icon.png",
   "entry": "index.js",
   "view": "studio",
@@ -15,6 +15,10 @@
   "dependencies": {},
   "sdk": "2.1.0",
   "permissions": [
-    "storage"
-  ]
+    "storage",
+    "background",
+    "notifications"
+  ],
+  "widget": true,
+  "autoload": true
 }
