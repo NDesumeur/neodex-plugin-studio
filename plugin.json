@@ -1,0 +1,20 @@
+{
+  "id": "neodex.studio",
+  "name": "Studio de plugins",
+  "version": "1.0.0",
+  "author": "NDesumeur",
+  "description": "Crée un petit plugin NeoDex sans écrire de code, à partir d'un modèle : jeu de quiz, compteur ou page de liens. Aperçu en direct, et export du plugin complet.",
+  "icon": "icon.png",
+  "entry": "index.js",
+  "view": "studio",
+  "neobase": ">=4.0.0",
+  "type": "app",
+  "category": "Outils",
+  "mobile": false,
+  "system": false,
+  "dependencies": {},
+  "sdk": "2.1.0",
+  "permissions": [
+    "storage"
+  ]
+}
