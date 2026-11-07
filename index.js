@@ -32,7 +32,33 @@ const CSS = `.stWrap{display:grid;grid-template-columns:240px 1fr;gap:18px;align
 .mk .mkIn input{flex:1;background:#120c26;color:#fff;border:2px solid var(--k);padding:8px;font-size:15px}
 .mk .mkChart{width:100%;height:auto;background:#0b0718}.mk .mkChart polyline{fill:none;stroke:var(--k);stroke-width:2}.mk .mkChart rect{fill:#fff}.mk .mkChart .g{stroke:#7ee07a;stroke-dasharray:4 4}
 .mk .mkWheel{align-self:center;width:260px;height:260px}
-.mk .mkCount.past{opacity:.45}`;
+.mk .mkCount.past{opacity:.45}
+.mk .mkHab{display:grid;gap:4px 6px;align-items:center}.mk .mkHab>span:not(.mkSub){overflow-wrap:anywhere;font-size:14px}.mk .mkHab .mkSub{text-align:center}.mk .mkHab b{font:12px var(--title,inherit);color:var(--k);text-align:right}
+.mk .mkDot{all:unset;cursor:var(--cp,pointer);width:26px;height:26px;display:grid;place-items:center;background:#120c26;box-shadow:inset 0 0 0 2px #2a2050;font-size:14px}.mk .mkDot:hover{box-shadow:inset 0 0 0 2px var(--k)}
+.mk .mkDot.on{background:var(--k);color:#05010b;box-shadow:inset -3px -3px 0 rgba(0,0,0,.25)}
+.stPx{width:30px;height:30px;image-rendering:pixelated;flex:none}.stItem .stPx{width:20px;height:20px}
+.stTpl .sysCard{position:relative;padding-top:24px}.stTpl .sysCard::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:var(--tc,#ff4fa8);box-shadow:inset 0 -2px 0 rgba(0,0,0,.3)}
+.stTpl .sysCard .stPx{width:40px;height:40px}`;
+// les icônes des modèles, en pixel art (# : couleur du modèle, w : blanc, k : contour sombre)
+const PXI = {
+  flash: ['.kkkkkkk..', 'kwwwwwwwk.', 'kw#####wkk', 'kwwwwwwwk#', 'kw###wwwk#', 'kwwwwwwwk#', 'kw##wwwwk#', 'kwwwwwwwk#', '.kkkkkkkk#', '..#######.'],
+  routine: ['kkkkkkkkkk', 'kwwwwwwwwk', 'kwwwwwww#k', 'kwwwwww##k', 'k#wwww##wk', 'k##ww##wwk', 'kw####wwwk', 'kww##wwwwk', 'kwwwwwwwwk', 'kkkkkkkkkk'],
+  steps: ['...kkkk...', '....kk....', '..kkkkkk..', '.kwwwwwwk.', 'kwwww#wwwk', 'kwwww#wwwk', 'kwwww##wwk', 'kwwwwwwwwk', '.kwwwwwwk.', '..kkkkkk..'],
+  tracker: ['k.........', 'k.......#.', 'k......##.', 'k..#..#...', 'k.###.#...', 'k#...#....', 'k#........', 'k.........', 'kkkkkkkkkk', '..........'],
+  wheel: ['...kkkk...', '.kk#ww#kk.', '.k##ww##k.', 'kwww##wwwk', 'kwww##wwwk', 'k##wwww##k', '.k#wwww#k.', '.kk####kk.', '...kkkk...', '....kk....'],
+  countdown: ['.k..k..k..', 'kkkkkkkkkk', 'k########k', 'kkkkkkkkkk', 'kwwwwwwwwk', 'kwkwkwkwwk', 'kwwwwwwwwk', 'kwkwk##wwk', 'kwwww##wwk', 'kkkkkkkkkk'],
+  quiz: ['..kkkkkk..', '.k######k.', 'k##kkkk##k', 'kkk...k##k', '.....k##k.', '....k##k..', '....k##k..', '.....kk...', '....k##k..', '....kkkk..'],
+  counter: ['kkkkkkkkkk', 'kwwwwwwwwk', 'kww##wwwwk', 'kw####wwwk', 'kww##wwwwk', 'kwwwww###k', 'kwwwwwwwwk', 'kwwwww###k', 'kwwwwwwwwk', 'kkkkkkkkkk'],
+  links: ['..........', '.kkkk.....', 'k####k....', 'k#kk#k....', 'k#k.kkkk..', '.kkkk###k.', '....k#kk#k', '....k#..#k', '.....k##k.', '......kk..'],
+  habits: ['kkkkkkkkkk', 'k#k#kwkwkk', 'kkkkkkkkkk', 'kwk#k#kwkk', 'kkkkkkkkkk', 'k#k#k#k#kk', 'kkkkkkkkkk', 'kwkwk#k#kk', 'kkkkkkkkkk', '..........'],
+  check: ['kkk.......', 'k#k.######', 'kkk.......', '..........', 'kkk.......', 'k#k.######', 'kkk.......', '..........', 'kkk.......', 'kwk.######'],
+};
+const pxIco = (k, color) => {
+  const rows = PXI[k] || PXI.check, pal = { '#': color || '#ff4fa8', w: '#f3eaff', k: '#140a26' };
+  let r = ''; rows.forEach((row, y) => [...row].forEach((c, x) => { if (pal[c]) r += `<rect x="${x}" y="${y}" width="1" height="1" fill="${pal[c]}"/>`; }));
+  const i = document.createElement('img'); i.className = 'stPx'; i.alt = '';
+  i.src = 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" shape-rendering="crispEdges">${r}</svg>`); return i;
+};
 // ---- les modèles : chacun dessine sa création dans « root » à partir de sa configuration ; api : load / save (sa mémoire), open (un site) ----
 function mkQuiz(root, cfg, api) {
   const qs = (cfg.questions || []).filter(q => q.q && q.a?.filter(Boolean).length >= 2);
@@ -111,6 +137,40 @@ function mkFlash(root, cfg, api) {  // fiches de révision, boîtes de Leitner :
     if (!shown) { const b = mkE('button', 'mkBtn', 'Voir la réponse'); b.onclick = () => { shown = true; draw(); }; return root.append(b); }
     const a = mkE('div', 'mkCard back', cur.b), row = mkE('div', 'mkGrid'), y = mkE('button', 'mkBtn good', 'Je savais'), n = mkE('button', 'mkBtn bad', 'À revoir');
     y.onclick = () => grade(true); n.onclick = () => grade(false); row.append(n, y); root.append(a, row);
+  }
+  draw();
+}
+function mkHabits(root, cfg, api) {  // plusieurs habitudes, les 7 derniers jours en cases à cocher, et la série de chacune
+  const items = mkLines(cfg.items), done = api.load('done') || {};  // done["habitude"] = ["2026-11-07", …]
+  const days = Array.from({length: 7}, (_, i) => mkAddDays(mkDay(), i - 6));
+  const streak = h => { const s = new Set(done[h] || []); let n = 0, d = mkDay(); if (!s.has(d)) d = mkAddDays(d, -1); while (s.has(d)) { n++; d = mkAddDays(d, -1); } return n; };
+  function draw() {
+    root.replaceChildren(mkE('h2', '', cfg.title || 'Mes habitudes'));
+    if (!items.length) return root.append(mkE('div', 'mkSub', 'Ajoute des habitudes : une par ligne.'));
+    const g = mkE('div', 'mkHab'); g.style.gridTemplateColumns = 'minmax(90px,1fr) repeat(7,26px) 40px';
+    g.append(mkE('span'), ...days.map(d => mkE('span', 'mkSub', 'LMMJVSD'[(new Date(d + 'T12:00').getDay() + 6) % 7])), mkE('span', 'mkSub', 'série'));
+    for (const h of items) {
+      g.append(mkE('span', '', h));
+      for (const d of days) {
+        const on = (done[h] || []).includes(d), b = mkE('button', 'mkDot' + (on ? ' on' : ''), on ? '✓' : ''); b.title = d.split('-').reverse().join('/');
+        b.onclick = () => { const s = new Set(done[h] || []); s.has(d) ? s.delete(d) : s.add(d); done[h] = [...s].filter(x => x >= mkAddDays(mkDay(), -400)).sort(); api.save('done', done); draw(); };
+        g.append(b);
+      }
+      g.append(mkE('b', '', streak(h) + ' j'));
+    }
+    root.append(g);
+  }
+  draw();
+}
+function mkCheck(root, cfg, api) {  // une liste à cocher qui garde son état (courses, valise, à faire)
+  const items = mkLines(cfg.items), on = new Set(api.load('on') || []);
+  function draw() {
+    root.replaceChildren(mkE('h2', '', cfg.title || 'Ma liste'));
+    if (!items.length) return root.append(mkE('div', 'mkSub', 'Ajoute des éléments : un par ligne.'));
+    const n = items.filter(t => on.has(t)).length, g = mkE('div', 'mkGoal'), f = mkE('i'); f.style.width = n / items.length * 100 + '%'; g.append(f);
+    root.append(mkE('div', 'mkSub', n + ' / ' + items.length + ' coché' + (n > 1 ? 's' : '')), g);
+    items.forEach(t => { const b = mkE('button', 'mkBtn mkTask' + (on.has(t) ? ' on' : ''), (on.has(t) ? '✓ ' : '○ ') + t); b.onclick = () => { on.has(t) ? on.delete(t) : on.add(t); api.save('on', [...on]); draw(); }; root.append(b); });
+    const r = mkE('button', 'mkBtn', 'Tout décocher'); r.onclick = () => { on.clear(); api.save('on', []); draw(); }; root.append(r);
   }
   draw();
 }
@@ -222,6 +282,10 @@ const TEMPLATES = {
     sum: (cfg, m) => [(cfg.questions || []).length + ' questions', 'Record : ' + (m.best || 0)]},
   counter: {icon: '🔢', name: 'Compteur', what: 'Des compteurs avec + et −, un pas et un objectif.', run: mkCounter, def: {title: 'Mes compteurs', color: '#5ec8ff', items: [{name: 'Verres d’eau', step: 1, goal: 8}]},
     sum: (cfg, m) => (cfg.items || []).filter(c => c.name).slice(0, 4).map((c, k) => c.name + ' : ' + (m.vals?.[k + ':' + c.name] || 0) + (+c.goal ? ' / ' + c.goal : ''))},
+  habits: {icon: '🗓️', name: 'Suivi d\'habitudes', what: 'Plusieurs habitudes, la semaine en cases à cocher et ta série pour chacune.', run: mkHabits, def: {title: 'Mes habitudes', color: '#7ee07a', items: 'Sport\nLecture\nPas d\'écran après 23 h'},
+    sum: (cfg, m) => { const it = mkLines(cfg.items), d = mkDay(), n = it.filter(h => (m.done?.[h] || []).includes(d)).length; return [n + ' / ' + it.length + ' aujourd\'hui']; }},
+  check: {icon: '☑️', name: 'Liste à cocher', what: 'Une liste qui garde ce que tu as coché : courses, valise, à faire.', run: mkCheck, def: {title: 'Liste de courses', color: '#5ec8ff', items: 'Pain\nLait\nŒufs\nPommes'},
+    sum: (cfg, m) => { const it = mkLines(cfg.items), on = new Set(m.on || []); return [it.filter(t => on.has(t)).length + ' / ' + it.length + ' cochés']; }},
   links: {icon: '🔗', name: 'Page de liens', what: 'Une grille de boutons vers tes sites préférés.', run: mkLinks, def: {title: 'Mes liens', color: '#7ee07a', text: '', links: [{label: 'NeoDex', url: 'https://github.com/NDesumeur', emoji: '⭐'}]},
     sum: cfg => [(cfg.links || []).length + ' liens']},
 };
@@ -248,7 +312,7 @@ export default async function (ctx) {
   // le widget de l'accueil : la création épinglée, en résumé
   function widget() {
     const a = data.apps.find(x => x.id === data.pin);
-    (a ? ctx.widget.set({title: TEMPLATES[a.tpl].icon + ' ' + (a.title || 'Sans titre'), lines: sumOf(a).length ? sumOf(a) : [TEMPLATES[a.tpl].name]}) : ctx.widget.clear()).catch(() => {});
+    (a ? ctx.widget.set({title: a.title || 'Sans titre', lines: sumOf(a).length ? sumOf(a) : [TEMPLATES[a.tpl].name]}) : ctx.widget.clear()).catch(() => {});
   }
   // les rappels : chaque jour à l'heure choisie, une notification de NeoDex (vérifié chaque minute, même onglet fermé)
   let bg = false;
@@ -261,7 +325,7 @@ export default async function (ctx) {
   };
   const startBg = async () => { if (bg || !data.apps.some(a => a.remind)) return; bg = await ctx.background.every(1, remindTick).catch(() => false); if (bg) remindTick(); };
   function list() {
-    $('stList').replaceChildren(...data.apps.map(a => { const b = el('button', 'stItem' + (a === cur ? ' on' : '')); b.append(el('i', '', TEMPLATES[a.tpl].icon), el('span', '', a.title || 'Sans titre'), el('small', '', (a.id === data.pin ? '📌' : '') + (a.remind ? '⏰' : ''))); b.onclick = () => { cur = a; mode = 'play'; draw(); }; return b; }));
+    $('stList').replaceChildren(...data.apps.map(a => { const b = el('button', 'stItem' + (a === cur ? ' on' : '')); b.append(pxIco(a.tpl, a.cfg?.color), el('span', '', a.title || 'Sans titre'), el('small', '', (a.id === data.pin ? '📌' : '') + (a.remind ? '⏰' : ''))); b.onclick = () => { cur = a; mode = 'play'; draw(); }; return b; }));
     if (!data.apps.length) $('stList').append(el('div', 'hint', 'Rien pour l\'instant : clique sur + NOUVEAU.'));
   }
   const addApp = (tpl, title, cfg) => { cur = {id: Date.now().toString(36), tpl, title, cfg: JSON.parse(JSON.stringify(cfg))}; data.apps.push(cur); save(); };
@@ -269,7 +333,7 @@ export default async function (ctx) {
     list(); const main = $('stMain');
     if (!cur) {  // choisir un modèle, ou importer une création partagée
       const g = el('div', 'stTpl');
-      for (const [k, t] of Object.entries(TEMPLATES)) { const c = el('div', 'sysCard px'); c.append(el('span', 'big', t.icon), el('b', '', t.name.toUpperCase()), el('span', 'hint', t.what)); c.onclick = () => { addApp(k, t.def.title, t.def); mode = 'edit'; draw(); }; g.append(c); }
+      for (const [k, t] of Object.entries(TEMPLATES)) { const c = el('div', 'sysCard px'); c.style.setProperty('--tc', t.def.color); c.append(pxIco(k, t.def.color), el('b', '', t.name.toUpperCase()), el('span', 'hint', t.what)); c.onclick = () => { addApp(k, t.def.title, t.def); mode = 'edit'; draw(); }; g.append(c); }
       const imp = el('div', 'sysCard px stImp'), code = el('input'), go = el('button', 'btn px', 'IMPORTER');
       code.placeholder = 'Colle ici le code NEOSTUDIO:… qu\'on t\'a envoyé';
       go.onclick = () => { try { const j = readShare(code.value); addApp(j.tpl, j.title, j.cfg); mode = 'play'; draw(); toast('Création importée'); } catch { toast('Ce code n\'est pas un partage du Studio', true); } };
@@ -302,6 +366,8 @@ export default async function (ctx) {
       field('Rappel chaque jour à (vide : aucun)', cur, 'remind', 'time', () => startBg()));
     if (cur.tpl === 'flash') form.append(field('Fiches : une par ligne, « recto | verso »', cur.cfg, 'cards', 'area'));
     if (cur.tpl === 'routine') form.append(field('Tâches : une par ligne', cur.cfg, 'items', 'area'));
+    if (cur.tpl === 'habits') form.append(field('Habitudes : une par ligne', cur.cfg, 'items', 'area'));
+    if (cur.tpl === 'check') form.append(field('Éléments : un par ligne', cur.cfg, 'items', 'area'));
     if (cur.tpl === 'wheel') form.append(field('Choix : un par ligne', cur.cfg, 'items', 'area'), field('Retirer le choix tiré (jusqu\'à ce qu\'il en reste deux)', cur.cfg, 'remove', 'checkbox'));
     if (cur.tpl === 'tracker') { const r = el('div', 'stRow'); r.append(field('Ce qu\'on note', cur.cfg, 'label'), field('Unité', cur.cfg, 'unit'), field('Objectif (0 = aucun)', cur.cfg, 'goal', 'number')); form.append(r); }
     if (cur.tpl === 'steps') {
