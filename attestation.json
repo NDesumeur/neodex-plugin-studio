@@ -1,9 +1,9 @@
 {
   "pluginId": "neodex.studio",
   "repo": "NDesumeur/neodex-plugin-studio",
-  "version": "2.0.2",
-  "sha256": "1e425ff4c7acf225ded98dc2cf9b0b23f57656a544296d10d06e337ad69a4d93",
-  "approvedAt": "2026-11-07T13:39:25.859Z",
+  "version": "2.0.3",
+  "sha256": "b76036b014343771e0f2a5797ad652766445bcb1398c6bc9a065459358265e15",
+  "approvedAt": "2026-11-08T12:10:50.607Z",
   "neobase": ">=4.0.0",
-  "signature": "QUoUxVVOvoLG7iOEoXQ4kzVOz+bZLjJskDv68oxtDdYERzQPgarIgiLz6nIbOl6qRA0PcyaJV928d0+VrtwdBQ=="
+  "signature": "EEoplFZ1O49SWoiRRGTTadu+uyRMau6PNRlXYBadjxjMG5+5md6YnYm1XnH1whHLMNnLl7kxJQsQGHSsSjxuCQ=="
 }
