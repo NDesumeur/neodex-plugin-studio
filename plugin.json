@@ -10,6 +10,7 @@
   "neobase": ">=4.0.0",
   "type": "app",
   "category": "Outils",
+  "compatibility": ["windows", "linux"],
   "syncMode": "fusion",
   "syncInfo": "Tes créations, avec leurs scores, séries et valeurs.",
   "mobile": false,
