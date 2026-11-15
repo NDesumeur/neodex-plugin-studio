@@ -33,7 +33,6 @@
  "Compteurs": "Counters",
  "Couleur": "Color",
  "Création importée": "Imported creation",
- "Crée tes petites applis sans code à partir de onze modèles : fiches de révision à répétition espacée, routine du jour, minuteur d'étapes, suivi chiffré avec courbe et objectif, tirage au sort, comptes à rebours, quiz, compteurs, habitudes, liste à cocher et page de liens. L'aperçu suit chaque frappe ; épingle une création en widget sur l'accueil, ajoute un rappel quotidien ou partage-la par un code.": "Build small apps without code from eleven templates: spaced-repetition flashcards, a daily routine, a step timer, a number tracker with a chart and goal, a random draw, countdowns, a quiz, counters, habits, a checklist and a links page. The preview follows every keystroke; pin a creation as a widget on the home page, add a daily reminder or share it with a code.",
  "Date": "Date",
  "Dernier tirage :": "Last draw:",
  "Derniers tirages :": "Latest prints:",
@@ -171,5 +170,6 @@
  "étapes ×": "steps ×",
  "📌 DÉSÉPINGLER": "📌 UNPIN",
  "📌 ÉPINGLER": "📌 PIN",
- "on main": "we hand"
+ "on main": "we hand",
+ "Crée tes petites applis sans code à partir de onze modèles : fiches de révision à répétition espacée, routine du jour, minuteur d'étapes, suivi chiffré avec courbe et objectif, tirage au sort, comptes à rebours, quiz, compteurs, habitudes, liste à cocher et page de liens. L'aperçu suit chaque frappe ; épingle une création en widget sur l'accueil, ajoute un rappel quotidien ou partage-la par un code. Cartes de modèles plus grandes (icône, nom, description), colonnes selon la taille de l'écran.": "Build small apps without code from eleven templates: spaced-repetition flashcards, a daily routine, a step timer, a number tracker with a chart and goal, a random draw, countdowns, a quiz, counters, habits, a checklist and a links page. The preview follows every keystroke; pin a creation as a widget on the home page, add a daily reminder or share it with a code. Larger template cards (icon, name, description), columns sized to the screen."
 }

@@ -1,14 +1,14 @@
 // Studio de plugins : crée tes petites applis sans écrire de code, à partir d'un modèle (fiches de révision, routine, minuteur d'étapes,
 // suivi chiffré, tirage au sort, comptes à rebours, quiz, compteurs, liens). Une création s'épingle en widget sur l'accueil,
 // envoie un rappel chaque jour, et se partage par un code à coller dans le studio d'un ami.
-const HTML = `<div class="appWrap">
+const HTML = `<div class="appWrap wide">
   <div class="agHead"><span class="label">Studio de plugins</span><div class="agNav"><button class="btn px main" id="stNew">+ NOUVEAU</button></div></div>
   <div class="stWrap"><div class="stSide sysCard px"><span class="label">Mes créations</span><div id="stList"></div></div><div id="stMain"></div></div>
 </div>`;
-const CSS = `.stWrap{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:start}.stSide{gap:6px}
+const CSS = `.stWrap{display:grid;grid-template-columns:clamp(220px,17vw,300px) minmax(0,1fr);gap:clamp(14px,1.4vw,24px);align-items:start}.stSide{gap:6px}
 .stItem{all:unset;display:flex;gap:8px;align-items:center;padding:8px;cursor:var(--cp,pointer);color:var(--lilac);font-size:14px;border:2px solid transparent}.stItem:hover{color:#fff}.stItem.on{border-color:var(--magenta);color:#fff}
 .stItem i{font-style:normal;font-size:18px}
-.stTpl{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}.stTpl .sysCard{cursor:var(--cp,pointer);gap:8px}.stTpl .sysCard:hover{--c:var(--magenta)}.stTpl .big{font-size:34px}.stTpl b{color:#fff;font:13px var(--title)}
+.stTpl{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(250px,16vw,320px),1fr));gap:clamp(14px,1.3vw,22px)}.stTpl .sysCard{cursor:var(--cp,pointer);gap:10px;padding:28px 20px 20px;min-height:clamp(170px,13vw,220px)}.stTpl .sysCard:hover{--c:var(--magenta)}.stTpl .big{font-size:34px}.stTpl b{color:#fff;font:clamp(15px,1.1vw,19px)/1.3 var(--title)}.stTpl .hint{font-size:clamp(15px,1vw,17px);line-height:1.45}
 .stEdit{display:grid;grid-template-columns:minmax(320px,1fr) minmax(320px,1fr);gap:18px;align-items:start}
 .stForm{gap:10px}.stForm label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
 .stForm input,.stForm textarea,.stForm select{background:var(--bg2,#14102a);color:#fff;border:2px solid var(--line2,#3a2f6a);font:14px var(--body,inherit);padding:6px 8px}
@@ -37,8 +37,8 @@ const CSS = `.stWrap{display:grid;grid-template-columns:240px 1fr;gap:18px;align
 .mk .mkDot{all:unset;cursor:var(--cp,pointer);width:26px;height:26px;display:grid;place-items:center;background:#120c26;box-shadow:inset 0 0 0 2px #2a2050;font-size:14px}.mk .mkDot:hover{box-shadow:inset 0 0 0 2px var(--k)}
 .mk .mkDot.on{background:var(--k);color:#05010b;box-shadow:inset -3px -3px 0 rgba(0,0,0,.25)}
 .stPx{width:30px;height:30px;image-rendering:pixelated;flex:none}.stItem .stPx{width:20px;height:20px}
-.stTpl .sysCard{position:relative;padding-top:24px}.stTpl .sysCard::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:var(--tc,#ff4fa8);box-shadow:inset 0 -2px 0 rgba(0,0,0,.3)}
-.stTpl .sysCard .stPx{width:40px;height:40px}`;
+.stTpl .sysCard{position:relative}.stTpl .sysCard::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:var(--tc,#ff4fa8);box-shadow:inset 0 -2px 0 rgba(0,0,0,.3)}
+.stTpl .sysCard .stPx{width:clamp(56px,4.2vw,76px);height:clamp(56px,4.2vw,76px)}`;
 // les icônes des modèles, en pixel art (# : couleur du modèle, w : blanc, k : contour sombre)
 const PXI = {
   flash: ['.kkkkkkk..', 'kwwwwwwwk.', 'kw#####wkk', 'kwwwwwwwk#', 'kw###wwwk#', 'kwwwwwwwk#', 'kw##wwwwk#', 'kwwwwwwwk#', '.kkkkkkkk#', '..#######.'],

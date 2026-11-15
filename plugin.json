@@ -1,9 +1,9 @@
 {
   "id": "neodex.studio",
   "name": "Studio de plugins",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "author": "NDesumeur",
-  "description": "Crée tes petites applis sans code à partir de onze modèles : fiches de révision à répétition espacée, routine du jour, minuteur d'étapes, suivi chiffré avec courbe et objectif, tirage au sort, comptes à rebours, quiz, compteurs, habitudes, liste à cocher et page de liens. L'aperçu suit chaque frappe ; épingle une création en widget sur l'accueil, ajoute un rappel quotidien ou partage-la par un code.",
+  "description": "Crée tes petites applis sans code à partir de onze modèles : fiches de révision à répétition espacée, routine du jour, minuteur d'étapes, suivi chiffré avec courbe et objectif, tirage au sort, comptes à rebours, quiz, compteurs, habitudes, liste à cocher et page de liens. L'aperçu suit chaque frappe ; épingle une création en widget sur l'accueil, ajoute un rappel quotidien ou partage-la par un code. Cartes de modèles plus grandes (icône, nom, description), colonnes selon la taille de l'écran.",
   "icon": "icon.png",
   "entry": "index.js",
   "view": "studio",
