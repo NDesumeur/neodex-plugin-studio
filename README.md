@@ -4,11 +4,15 @@ Crée tes petites applis sans écrire de code : tu choisis un modèle, tu rempli
 
 *English version: [README.en.md](README.en.md)*
 
+## Appli à blocs et vrais plugins (nouveau en 3.0.0)
+
+Un douzième modèle pour faire ton appli : écrans, boutons, listes, variables et blocs d'actions (si … alors, aller à l'écran…). Chaque création devient un vrai plugin .zip à installer dans NeoStore.
+
 ## Créer
 
 **+ Nouveau**, puis choisis un modèle. Le formulaire est à côté de l'aperçu, qui se met à jour à chaque lettre tapée. Chaque création a son titre et sa couleur, et se retrouve dans **Mes créations**.
 
-## Les onze modèles
+## Les douze modèles
 
 - **Fiches de révision** : une fiche par ligne, « recto | verso ». On voit le recto, **Voir la réponse**, puis **Je savais** ou **À revoir**. C'est le système des boîtes de Leitner : une fiche sue revient 2, 4, 8, 16… jours plus tard (64 jours au plus) ; une fiche ratée revient le jour même et retourne au début. **Tout revoir quand même** lance une révision libre de toutes les fiches.
 - **Routine du jour** : une tâche par ligne. La liste se décoche toute seule chaque matin ; la série compte les jours où tout a été coché.
@@ -21,6 +25,12 @@ Crée tes petites applis sans écrire de code : tu choisis un modèle, tu rempli
 - **Suivi d'habitudes** : une habitude par ligne, les 7 derniers jours en cases à cocher et la série de chacune.
 - **Liste à cocher** : une liste qui garde ce que tu as coché (courses, valise, choses à faire), avec **Tout décocher**.
 - **Page de liens** : une grille de boutons vers tes sites préférés.
+
+## Appli à blocs et vrais plugins (3.0.0)
+
+- **Appli à blocs** : le douzième modèle, pour faire ton appli à toi. Des **variables** gardent les données (nombre, texte ou liste). L'appli a des **écrans** (avec des onglets en haut si tu veux) ; chaque écran aligne des composants : titre, texte, grand nombre, bouton, champ à remplir, case à cocher, liste (avec cases à cocher), image, trait. Écris `{variable}` dans un texte pour afficher sa valeur, `{liste taille}` pour le nombre d'éléments.
+- Chaque **bouton** reçoit des **blocs** de couleur, lancés dans l'ordre : aller à un écran, ajouter à une variable, mettre une variable à une valeur, nombre au hasard, ajouter à une liste, vider une liste, **si … alors** (avec ses propres blocs), afficher un message, jouer un bip, ouvrir un site.
+- **⇩ VRAI PLUGIN**, sur n'importe quelle création : fabrique un plugin NeoDex complet (.zip avec plugin.json, code, README et icône). Installe-le avec **NeoStore → Installés → INSTALLER UN FICHIER .ZIP…** (NeoDex 3.4.2 ou plus) : il a son onglet, son icône et ses données, sans le Studio. Il n'est pas vérifié par NeoDex, donc il passe l'antivirus et reste dans le bac à sable. Pour le publier, mets les fichiers dans un dépôt GitHub avec le sujet « neodex-plugin ».
 
 ## Pour chaque création
 

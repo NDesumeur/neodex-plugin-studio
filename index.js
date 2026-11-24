@@ -36,6 +36,20 @@ const CSS = `.stWrap{display:grid;grid-template-columns:clamp(220px,17vw,300px) 
 .mk .mkHab{display:grid;gap:4px 6px;align-items:center}.mk .mkHab>span:not(.mkSub){overflow-wrap:anywhere;font-size:14px}.mk .mkHab .mkSub{text-align:center}.mk .mkHab b{font:12px var(--title,inherit);color:var(--k);text-align:right}
 .mk .mkDot{all:unset;cursor:var(--cp,pointer);width:26px;height:26px;display:grid;place-items:center;background:#120c26;box-shadow:inset 0 0 0 2px #2a2050;font-size:14px}.mk .mkDot:hover{box-shadow:inset 0 0 0 2px var(--k)}
 .mk .mkDot.on{background:var(--k);color:#05010b;box-shadow:inset -3px -3px 0 rgba(0,0,0,.25)}
+.mk .mkTop{display:flex;gap:6px;flex-wrap:wrap}.mk .mkTop .mkBtn{padding:6px 10px;font-size:13px}.mk .mkTop .mkBtn.on{background:var(--k);color:#05010b}
+.mk .mkMsg{padding:8px 12px;background:color-mix(in srgb,var(--k) 22%,#120c26);border-left:4px solid var(--k)}
+.mk .mkLi{display:flex;gap:8px;align-items:center;padding:6px 10px;background:#120c26}.mk .mkLi span{flex:1;overflow-wrap:anywhere}.mk .mkLi.on span{text-decoration:line-through;opacity:.6}
+.mk .mkLi button{all:unset;cursor:var(--cp,pointer);padding:2px 8px;color:#b8a8e0}.mk .mkLi button:hover{color:#fff}
+.mk img.mkImg{max-width:100%;align-self:center}.mk hr{border:0;border-top:2px solid #2a2050;width:100%}
+.mk .mkChk{display:flex;gap:10px;align-items:center;cursor:var(--cp,pointer)}.mk .mkChk input{width:20px;height:20px;accent-color:var(--k)}
+.stScr{display:flex;gap:6px;flex-wrap:wrap}.stScr .btn{padding:6px 10px}
+.stComp{border:2px solid var(--line2,#3a2f6a);padding:10px;display:flex;flex-direction:column;gap:6px;background:rgba(0,0,0,.15)}
+.stComp>.stRow:first-child b{flex:1;color:#fff;font-size:13px;letter-spacing:.05em}
+.stBlk{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:6px 8px;border-radius:6px;color:#fff;font-size:13px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+.stBlk input,.stBlk select{background:rgba(0,0,0,.35)!important;border:1px solid rgba(255,255,255,.35)!important;color:#fff;padding:3px 6px!important;font-size:13px!important;width:auto;min-width:60px}
+.stBlk.ecran{background:#a0549c}.stBlk.ajoute,.stBlk.met,.stBlk.hasard{background:#e0752a}.stBlk.liste,.stBlk.vide{background:#c43a5c}.stBlk.si{background:#c99b1a;flex-direction:column;align-items:stretch}
+.stBlk.message,.stBlk.son,.stBlk.lien{background:#4a7ad8}.stBlk .x{all:unset;cursor:var(--cp,pointer);margin-left:auto;padding:0 4px}
+.stBlk.si>.stBlks{margin-left:14px;border-left:4px solid rgba(0,0,0,.3);padding-left:8px}.stBlks{display:flex;flex-direction:column;gap:5px}
 .stPx{width:30px;height:30px;image-rendering:pixelated;flex:none}.stItem .stPx{width:20px;height:20px}
 .stTpl .sysCard{position:relative}.stTpl .sysCard::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:var(--tc,#ff4fa8);box-shadow:inset 0 -2px 0 rgba(0,0,0,.3)}
 .stTpl .sysCard .stPx{width:clamp(56px,4.2vw,76px);height:clamp(56px,4.2vw,76px)}`;
@@ -51,6 +65,7 @@ const PXI = {
   counter: ['kkkkkkkkkk', 'kwwwwwwwwk', 'kww##wwwwk', 'kw####wwwk', 'kww##wwwwk', 'kwwwww###k', 'kwwwwwwwwk', 'kwwwww###k', 'kwwwwwwwwk', 'kkkkkkkkkk'],
   links: ['..........', '.kkkk.....', 'k####k....', 'k#kk#k....', 'k#k.kkkk..', '.kkkk###k.', '....k#kk#k', '....k#..#k', '.....k##k.', '......kk..'],
   habits: ['kkkkkkkkkk', 'k#k#kwkwkk', 'kkkkkkkkkk', 'kwk#k#kwkk', 'kkkkkkkkkk', 'k#k#k#k#kk', 'kkkkkkkkkk', 'kwkwk#k#kk', 'kkkkkkkkkk', '..........'],
+  app: ['kkkkkkkkkk', 'k########k', 'kkkkkkkkkk', 'kwwwwwwwwk', 'kw###wwwwk', 'kwwwwwwwwk', 'kw######wk', 'kwwwwwwwwk', 'kww####wwk', 'kkkkkkkkkk'],
   check: ['kkk.......', 'k#k.######', 'kkk.......', '..........', 'kkk.......', 'k#k.######', 'kkk.......', '..........', 'kkk.......', 'kwk.######'],
 };
 const pxIco = (k, color) => {
@@ -265,6 +280,60 @@ function mkCountdown(root, cfg) {  // les comptes à rebours : examens, voyages,
   for (const e of evs) { const n = mkDaysTo(e.d), r = mkE('div', 'mkCount' + (n < 0 ? ' past' : ''));
     r.append(mkE('span', '', (e.emoji || '📅') + ' ' + e.name), mkE('span', 'mkSub', e.d.split('-').reverse().join('/')), mkE('b', '', n === 0 ? 'aujourd\'hui !' : n < 0 ? 'passé' : n + ' j'), mkE('span')); root.append(r); }
 }
+// l'appli à blocs : des écrans faits de composants ; les boutons lancent des blocs qui changent les variables (gardées) ou l'écran
+const MK_OPS = {'>=': (a, b) => a >= b, '<=': (a, b) => a <= b, '=': (a, b) => String(a) === String(b), '≠': (a, b) => String(a) !== String(b), '>': (a, b) => a > b, '<': (a, b) => a < b};
+function mkApp(root, cfg, api) {
+  const vars = cfg.vars || [], screens = cfg.screens?.length ? cfg.screens : [{name: 'Accueil', items: []}];
+  const init = () => Object.fromEntries(vars.map(v => [v.name, v.type === 'liste' ? [] : v.type === 'nombre' ? +v.init || 0 : String(v.init ?? '')]));
+  const V = {...init(), ...(api.load('vars') || {})}; let scr = api.screen ?? api.load('screen') ?? 0, msg = '';
+  if (scr >= screens.length) scr = 0;
+  const keep = () => { api.save('vars', V); api.save('screen', scr); };
+  const val = x => { const t = String(x ?? '').replace(/\{([^{}]+)\}/g, (m, n) => { n = n.trim(); const c = /^(.+) (taille|nombre)$/.exec(n); if (c && Array.isArray(V[c[1]])) return V[c[1]].length; const v = V[n]; return Array.isArray(v) ? v.join(', ') : v ?? m; }); return t; };
+  const num = x => { const n = +val(x); return Number.isFinite(n) ? n : 0; };
+  let ac = null; const beep = () => { try { ac ??= new AudioContext(); const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 880; g.gain.setValueAtTime(.06, ac.currentTime); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + .25); o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + .25); } catch {} };
+  function run(blocks, depth = 0) {
+    for (const b of blocks || []) {
+      if (depth > 20) return;
+      const isList = Array.isArray(V[b.v]);
+      if (b.b === 'ecran') scr = Math.max(0, Math.min(screens.length - 1, +b.s || 0));
+      else if (b.b === 'ajoute' && b.v in V && !isList) V[b.v] = (+V[b.v] || 0) + num(b.n);
+      else if (b.b === 'met' && b.v in V && !isList) V[b.v] = vars.find(x => x.name === b.v)?.type === 'nombre' ? num(b.val) : val(b.val);
+      else if (b.b === 'hasard' && b.v in V && !isList) { const a = Math.round(num(b.min)), z = Math.round(num(b.max)); V[b.v] = a + Math.floor(Math.random() * (Math.max(a, z) - a + 1)); }
+      else if (b.b === 'liste' && isList) { const t = val(b.val).trim(); if (t) V[b.v].push(t); }
+      else if (b.b === 'vide' && isList) V[b.v] = [];
+      else if (b.b === 'si') { const a = Array.isArray(V[b.v]) ? V[b.v].length : V[b.v], n = vars.find(x => x.name === b.v)?.type === 'texte' ? val(b.n) : num(b.n); if ((MK_OPS[b.op] || MK_OPS['='])(a, n)) run(b.then, depth + 1); }
+      else if (b.b === 'message') msg = val(b.val);
+      else if (b.b === 'son') beep();
+      else if (b.b === 'lien' && /^https?:\/\//.test(b.url || '')) api.open(b.url);
+    }
+  }
+  function draw() {
+    const S = screens[scr] || screens[0], out = [mkE('h2', '', cfg.title || 'Mon appli')];
+    if (screens.length > 1 && cfg.tabs) { const top = mkE('div', 'mkTop'); screens.forEach((x, i) => { const b = mkE('button', 'mkBtn' + (i === scr ? ' on' : ''), x.name || 'Écran ' + (i + 1)); b.onclick = () => { scr = i; msg = ''; keep(); draw(); }; top.append(b); }); out.push(top); }
+    if (msg) out.push(mkE('div', 'mkMsg', msg));
+    for (const it of S.items || []) {
+      if (it.t === 'titre') out.push(mkE('h2', '', val(it.text)));
+      else if (it.t === 'texte') { const p = mkE('div', '', val(it.text)); p.style.whiteSpace = 'pre-wrap'; out.push(p); }
+      else if (it.t === 'nombre') { const w = mkE('div'); if (it.label) w.append(mkE('div', 'mkSub', val(it.label))); w.append(mkE('div', 'mkBig', val('{' + it.v + '}'))); out.push(w); }
+      else if (it.t === 'bouton') { const b = mkE('button', 'mkBtn', val(it.text) || 'Bouton'); b.onclick = () => { msg = ''; run(it.blocks); keep(); draw(); }; out.push(b); }
+      else if (it.t === 'champ' && it.v in V) { const r = mkE('div', 'stRow mkIn'), i = mkE('input'); i.placeholder = val(it.label) || it.v; i.value = Array.isArray(V[it.v]) ? '' : V[it.v];
+        if (Array.isArray(V[it.v])) { const add = mkE('button', 'mkBtn', '+'); const go = () => { const t = i.value.trim(); if (t) { V[it.v].push(t); keep(); draw(); } }; add.onclick = go; i.onkeydown = e => { if (e.key === 'Enter') go(); }; r.append(i, add); }
+        else { i.oninput = () => { V[it.v] = vars.find(x => x.name === it.v)?.type === 'nombre' ? +i.value || 0 : i.value; keep(); }; i.onchange = () => draw(); r.append(i); }
+        r.style.display = 'flex'; r.style.gap = '8px'; out.push(r); }
+      else if (it.t === 'case' && it.v in V) { const l = mkE('label', 'mkChk'), c = mkE('input'); c.type = 'checkbox'; c.checked = !!+V[it.v] || V[it.v] === 'oui'; c.onchange = () => { V[it.v] = typeof V[it.v] === 'number' ? +c.checked : c.checked ? 'oui' : 'non'; keep(); draw(); }; l.append(c, mkE('span', '', val(it.label) || it.v)); out.push(l); }
+      else if (it.t === 'liste' && Array.isArray(V[it.v])) { const box = mkE('div', 'mkHab'); box.style.display = 'flex'; box.style.flexDirection = 'column';
+        if (!V[it.v].length) box.append(mkE('div', 'mkSub', val(it.empty) || 'Rien pour l\'instant.'));
+        V[it.v].forEach((x, k) => { const on = /^✓ /.test(x), r = mkE('div', 'mkLi' + (on ? ' on' : '')), sp = mkE('span', '', x.replace(/^✓ /, ''));
+          if (it.check) { const c = mkE('button', '', on ? '☑' : '☐'); c.title = 'Cocher'; c.onclick = () => { V[it.v][k] = on ? x.slice(2) : '✓ ' + x; keep(); draw(); }; r.append(c); }
+          r.append(sp); const d = mkE('button', '', '✕'); d.title = 'Retirer'; d.onclick = () => { V[it.v].splice(k, 1); keep(); draw(); }; r.append(d); box.append(r); });
+        out.push(box); }
+      else if (it.t === 'image' && it.src) { const i = mkE('img', 'mkImg'); i.src = it.src; i.alt = ''; out.push(i); }
+      else if (it.t === 'trait') out.push(mkE('hr'));
+    }
+    root.replaceChildren(...out);
+  }
+  draw();
+}
 const TEMPLATES = {
   flash: {icon: '🃏', name: 'Fiches de révision', what: 'Recto / verso, et chaque fiche revient au bon moment (boîtes de Leitner).', run: mkFlash, def: {title: 'Vocabulaire anglais', color: '#5ec8ff', cards: 'chat | cat\nchien | dog\nmaison | house'},
     sum: (cfg, m) => { const c = mkCards(cfg), due = c.filter(x => (m.box?.[x.f]?.due || '') <= mkDay()).length; return [due ? due + ' fiche(s) à réviser' : 'Rien à réviser aujourd\'hui', c.length + ' fiches']; }},
@@ -286,9 +355,51 @@ const TEMPLATES = {
     sum: (cfg, m) => { const it = mkLines(cfg.items), d = mkDay(), n = it.filter(h => (m.done?.[h] || []).includes(d)).length; return [n + ' / ' + it.length + ' aujourd\'hui']; }},
   check: {icon: '☑️', name: 'Liste à cocher', what: 'Une liste qui garde ce que tu as coché : courses, valise, à faire.', run: mkCheck, def: {title: 'Liste de courses', color: '#5ec8ff', items: 'Pain\nLait\nŒufs\nPommes'},
     sum: (cfg, m) => { const it = mkLines(cfg.items), on = new Set(m.on || []); return [it.filter(t => on.has(t)).length + ' / ' + it.length + ' cochés']; }},
+  app: {icon: '🧩', name: 'Appli à blocs', what: 'Ton appli à toi : des écrans, des boutons, des listes et des données, et des blocs pour dire ce que fait chaque bouton.', run: mkApp,
+    def: {title: 'Mes points', color: '#ff8a3a', tabs: true, vars: [{name: 'points', type: 'nombre', init: 0}, {name: 'idées', type: 'liste', init: ''}],
+      screens: [{name: 'Accueil', items: [{t: 'nombre', v: 'points', label: 'Mes points'}, {t: 'bouton', text: '+1 point', blocks: [{b: 'ajoute', v: 'points', n: 1}, {b: 'si', v: 'points', op: '>=', n: 10, then: [{b: 'message', val: 'Bravo, {points} points !'}, {b: 'son'}]}]}, {t: 'bouton', text: 'Remettre à zéro', blocks: [{b: 'met', v: 'points', val: 0}]}]},
+        {name: 'Idées', items: [{t: 'texte', text: 'Note tes idées : {idées taille} pour l\'instant.'}, {t: 'champ', v: 'idées', label: 'Une idée'}, {t: 'liste', v: 'idées', check: true}]}]},
+    sum: (cfg, m) => (cfg.vars || []).filter(v => v.type !== 'liste').slice(0, 3).map(v => v.name + ' : ' + (m.vars?.[v.name] ?? v.init ?? ''))},
   links: {icon: '🔗', name: 'Page de liens', what: 'Une grille de boutons vers tes sites préférés.', run: mkLinks, def: {title: 'Mes liens', color: '#7ee07a', text: '', links: [{label: 'NeoDex', url: 'https://github.com/NDesumeur', emoji: '⭐'}]},
     sum: cfg => [(cfg.links || []).length + ' liens']},
 };
+const stCRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return b => { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = t[(c ^ b[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }; })();
+function stZip(files) {  // [{name, data: Uint8Array}] -> les octets d'un .zip
+  const enc = new TextEncoder(), parts = [], cen = []; let off = 0;
+  const u16 = n => [n & 255, (n >> 8) & 255], u32 = n => [n & 255, (n >> 8) & 255, (n >> 16) & 255, (n >>> 24) & 255];
+  for (const f of files) { const name = enc.encode(f.name), crc = stCRC(f.data), hd = new Uint8Array([0x50, 0x4b, 3, 4, 20, 0, 0, 8, 0, 0, 0, 0, 33, 0, ...u32(crc), ...u32(f.data.length), ...u32(f.data.length), ...u16(name.length), 0, 0]);
+    parts.push(hd, name, f.data); cen.push({name, crc, size: f.data.length, off}); off += hd.length + name.length + f.data.length; }
+  const cs = off; for (const c of cen) { const h = new Uint8Array([0x50, 0x4b, 1, 2, 20, 0, 20, 0, 0, 8, 0, 0, 0, 0, 33, 0, ...u32(c.crc), ...u32(c.size), ...u32(c.size), ...u16(c.name.length), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...u32(c.off)]); parts.push(h, c.name); off += h.length + c.name.length; }
+  parts.push(new Uint8Array([0x50, 0x4b, 5, 6, 0, 0, 0, 0, ...u16(cen.length), ...u16(cen.length), ...u32(off - cs), ...u32(cs), 0, 0]));
+  const out = new Uint8Array(parts.reduce((a, p) => a + p.length, 0)); let k = 0; for (const p of parts) { out.set(p, k); k += p.length; } return out;
+}
+const stSlug = t => String(t || 'appli').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '') .slice(0, 24) || 'appli';
+// une création devient un vrai plugin : plugin.json, index.js (le moteur de son modèle et sa configuration), README, icône
+const ST_HELPERS = [mkE, mkDay, mkAddDays, mkLines, mkCards, mkNextDate, mkDaysTo];
+const ST_HELPER_NAMES = ['mkE', 'mkDay', 'mkAddDays', 'mkLines', 'mkCards', 'mkNextDate', 'mkDaysTo'];
+function stPluginFiles(a, iconPng) {
+  const t = TEMPLATES[a.tpl], title = (a.title || 'Mon appli').slice(0, 40), id = 'studio.' + stSlug(title) + '.' + a.id.replace(/[^a-z0-9]/g, '');
+  const css = CSS.split('/* l\'aspect des créations */')[1].split('.stPx{')[0];
+  const fns = [t.run];
+  const code = '// ' + title + ' : fait avec le Studio de plugins de NeoDex (modèle « ' + t.name + ' »).\n' +
+    'const CFG = ' + JSON.stringify(a.cfg, null, 1) + ';\n' + 'const CSS = ' + JSON.stringify(css + '.mk{padding:clamp(16px,2.2vw,36px);max-width:900px;margin:0 auto}') + ';\n' +
+    ST_HELPERS.map((f, i) => 'const ' + ST_HELPER_NAMES[i] + ' = ' + f.toString() + ';').join('\n') + '\n' + (t.run === mkApp ? 'const MK_OPS = {\'>=\': (a, b) => a >= b, \'<=\': (a, b) => a <= b, \'=\': (a, b) => String(a) === String(b), \'≠\': (a, b) => String(a) !== String(b), \'>\': (a, b) => a > b, \'<\': (a, b) => a < b};\n' : '') +
+    fns.map(f => f.toString()).join('\n') + '\n' +
+    'export default async function (ctx) {\n  const view = ctx.view; ctx.host.addStyle(CSS);\n  let mem = {}; try { mem = (await ctx.folder.read(\'memoire\')) || {}; } catch {}\n' +
+    '  let t = 0; const api = {load: k => mem[k], save: (k, v) => { mem[k] = v; clearTimeout(t); t = setTimeout(() => ctx.folder.write(\'memoire\', mem).catch(() => {}), 400); }, open: u => ctx.host.newTab(u)};\n' +
+    '  const root = document.createElement(\'div\'); root.className = \'mk\'; root.style.setProperty(\'--k\', CFG.color || \'#ff4fa8\'); view.replaceChildren(root);\n  ' + t.run.name + '(root, CFG, api);\n}\n';
+  const manifest = {id, name: title, version: '1.0.0', author: 'Studio de plugins', description: (t.what + ' Fait avec le Studio de plugins de NeoDex.').slice(0, 300), icon: 'icon.png', entry: 'index.js', view: 'studio-' + stSlug(title),
+    neobase: '>=4.0.0', type: 'app', category: 'Outils', compatibility: ['windows', 'linux'], syncMode: 'fusion', syncInfo: 'Ce que tu notes dans l\'appli.', mobile: false, dependencies: {}, sdk: '2.1.0', permissions: ['storage']};
+  const readme = '# ' + title + '\n\n' + t.what + '\n\nFait avec le **Studio de plugins** de NeoDex, modèle « ' + t.name + ' ».\n\n## Installer\n\nDans NeoDex : **NeoStore → Installés → INSTALLER UN FICHIER .ZIP…**, puis choisis ce fichier. Le plugin n\'est pas vérifié par NeoDex : il passe l\'antivirus et reste dans le bac à sable, avec la seule autorisation de garder ses données.\n\nPour le publier dans NeoStore : mets ces fichiers dans un dépôt GitHub avec le sujet « neodex-plugin » et joins le .zip à une Release.\n';
+  const enc = new TextEncoder();
+  return {id, files: [{name: 'plugin.json', data: enc.encode(JSON.stringify(manifest, null, 2) + '\n')}, {name: 'index.js', data: enc.encode(code)}, {name: 'README.md', data: enc.encode(readme)}, {name: 'icon.png', data: iconPng}]};
+}
+// l'icône du plugin : l'icône du modèle, en 64 × 64
+async function stIconPng(tpl, color) {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d'), rows = PXI[tpl] || PXI.check, pal = {'#': color || '#ff4fa8', w: '#f3eaff', k: '#140a26'};
+  g.fillStyle = '#100a20'; g.fillRect(0, 0, 64, 64); rows.forEach((row, y) => [...row].forEach((ch, x) => { if (pal[ch]) { g.fillStyle = pal[ch]; g.fillRect(2 + x * 6, 2 + y * 6, 6, 6); } }));
+  return new Uint8Array(await (await new Promise(ok => c.toBlob(ok, 'image/png'))).arrayBuffer());
+}
 // le partage : une création (sans ses scores) tient dans un code à copier, que le studio d'un ami importe
 const shareCode = a => 'NEOSTUDIO:' + btoa(unescape(encodeURIComponent(JSON.stringify({tpl: a.tpl, title: a.title, cfg: a.cfg}))));
 const readShare = s => { const j = JSON.parse(decodeURIComponent(escape(atob(String(s).trim().replace(/^NEOSTUDIO:/, ''))))); if (!TEMPLATES[j.tpl] || typeof j.cfg !== 'object') throw new Error('code inconnu'); return j; };
@@ -345,6 +456,8 @@ export default async function (ctx) {
     b('▶ UTILISER', () => { mode = 'play'; draw(); }, mode === 'play'); b('✎ MODIFIER', () => { mode = 'edit'; draw(); }, mode === 'edit');
     b(data.pin === cur.id ? '📌 DÉSÉPINGLER' : '📌 ÉPINGLER', () => { data.pin = data.pin === cur.id ? '' : cur.id; save(); widget(); toast(data.pin ? 'Épinglée sur l\'accueil (widget)' : 'Retirée de l\'accueil'); draw(); }, data.pin === cur.id, 'Son résumé dans un widget de l\'accueil de NeoDex');
     b('⇪ PARTAGER', () => { mode = 'share'; draw(); }, mode === 'share');
+    b('⇩ VRAI PLUGIN', async () => { const {id, files} = stPluginFiles(cur, await stIconPng(cur.tpl, cur.cfg.color)), z = stZip(files), a = el('a'); a.href = URL.createObjectURL(new Blob([z], {type: 'application/zip'})); a.download = id + '-1.0.0.zip'; document.body.append(a); a.click(); a.remove();
+      toast('Plugin .zip dans tes téléchargements : NeoStore → Installés → INSTALLER UN FICHIER .ZIP…'); }, false, 'Fabrique un vrai plugin NeoDex (.zip) : il s\'installe dans NeoStore, a son onglet et son icône, et se publie sur GitHub');
     b('⧉ DUPLIQUER', () => { addApp(cur.tpl, (cur.title || 'Sans titre') + ' (copie)', cur.cfg); mode = 'edit'; draw(); });
     b('✕ SUPPRIMER', async () => { if (!(await confirm('Supprimer « ' + (cur.title || 'Sans titre') + ' » ?', {danger: true}).catch(() => false))) return; data.apps = data.apps.filter(a => a !== cur); delete data.mem[cur.id]; if (data.pin === cur.id) data.pin = ''; cur = null; save(); draw(); });
     const stage = el('div', 'mk'); stage.style.setProperty('--k', cur.cfg.color || '#ff4fa8');
@@ -358,7 +471,8 @@ export default async function (ctx) {
     }
     // modifier : le formulaire à gauche, l'aperçu en direct à droite
     const form = el('div', 'sysCard px stForm'), prev = el('div', 'sysCard px stPrev'), wrap = el('div', 'stEdit');
-    const refresh = () => { stage.style.setProperty('--k', cur.cfg.color || '#ff4fa8'); TEMPLATES[cur.tpl].run(stage, cur.cfg, {load: k => data.mem[cur.id]?.[k], save() {}, open: u => newTab(u)}); list(); save(); };
+    const refresh = () => { stage.style.setProperty('--k', cur.cfg.color || '#ff4fa8'); TEMPLATES[cur.tpl].run(stage, cur.cfg, {load: k => data.mem[cur.id]?.[k], save() {}, open: u => newTab(u), screen: cur.tpl === 'app' ? edScr : undefined}); list(); save(); };
+    draw.soft = () => refresh();
     const field = (label, obj, key, type = 'text', after) => { const l = el('label', '', label), i = el(type === 'area' ? 'textarea' : 'input'); if (type !== 'area') i.type = type; else i.rows = 6; if (type === 'checkbox') i.checked = !!obj[key]; else i.value = obj[key] ?? ''; i.oninput = () => { obj[key] = type === 'number' ? +i.value : type === 'checkbox' ? i.checked : i.value; if (obj === cur.cfg && key === 'title') cur.title = i.value; after?.(); refresh(); }; if (type === 'checkbox') { l.classList.add('stCheck'); l.prepend(i); } else l.append(i); return l; };
     const block = (arr, idx, fill) => { const bl = el('div', 'stBlock'), x = el('button', 'btn px x', '✕'); x.title = 'Retirer'; x.onclick = () => { arr.splice(idx, 1); draw(); }; bl.append(x); fill(bl); return bl; };
     const add = (t, f) => { const x = el('button', 'btn px', t); x.onclick = () => { f(); draw(); }; return x; };
@@ -390,8 +504,76 @@ export default async function (ctx) {
     }
     if (cur.tpl === 'counter') { cur.cfg.items.forEach((c, i) => form.append(block(cur.cfg.items, i, bl => { const r = el('div', 'stRow'); r.append(field('Nom', c, 'name'), field('Pas', c, 'step', 'number'), field('Objectif (0 = aucun)', c, 'goal', 'number')); bl.append(r); }))); form.append(add('+ COMPTEUR', () => cur.cfg.items.push({name: '', step: 1, goal: 0}))); }
     if (cur.tpl === 'links') { form.append(field('Texte d\'introduction', cur.cfg, 'text', 'area')); cur.cfg.links.forEach((l, i) => form.append(block(cur.cfg.links, i, bl => { const r = el('div', 'stRow'); r.append(field('Émoji', l, 'emoji'), field('Nom', l, 'label')); bl.append(r, field('Adresse', l, 'url')); }))); form.append(add('+ LIEN', () => cur.cfg.links.push({label: '', url: '', emoji: '🔗'}))); }
+    if (cur.tpl === 'app') appEditor(form, field);
     prev.append(el('span', 'label', 'Aperçu'), stage); wrap.append(form, prev); main.replaceChildren(bar, wrap); bar.style.marginBottom = '14px'; refresh();
   }
+  // ---- l'éditeur de l'appli à blocs : variables, écrans, composants, blocs ----
+  let edScr = 0;
+  const COMPS = [['titre', 'Titre'], ['texte', 'Texte'], ['bouton', 'Bouton'], ['nombre', 'Grand nombre'], ['champ', 'Champ à remplir'], ['case', 'Case à cocher'], ['liste', 'Liste'], ['image', 'Image'], ['trait', 'Trait']];
+  const BLOCKS = [['ecran', 'Aller à l\'écran'], ['ajoute', 'Ajouter à une variable'], ['met', 'Mettre une variable à'], ['hasard', 'Nombre au hasard'], ['liste', 'Ajouter à une liste'], ['vide', 'Vider une liste'], ['si', 'Si … alors'], ['message', 'Afficher un message'], ['son', 'Jouer un bip'], ['lien', 'Ouvrir un site']];
+  const move = (arr, i, d) => { const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; draw(); };
+  function appEditor(form, field) {
+    const cfg = cur.cfg; cfg.vars ??= []; cfg.screens ??= [{name: 'Accueil', items: []}]; if (edScr >= cfg.screens.length) edScr = 0;
+    const sel = (obj, key, opts, after) => { const x = el('select'); for (const [v, t] of opts) { const o = el('option', '', t); o.value = v; x.append(o); } x.value = obj[key] ?? opts[0]?.[0] ?? ''; if (obj[key] == null && opts.length) obj[key] = opts[0][0]; x.onchange = () => { obj[key] = typeof opts[0]?.[0] === 'number' ? +x.value : x.value; after ? after() : draw(); }; return x; };
+    const inp = (obj, key, ph, type = 'text') => { const i = el('input'); i.type = type; i.placeholder = ph || ''; i.value = obj[key] ?? ''; i.oninput = () => { obj[key] = type === 'number' ? +i.value : i.value; draw.soft(); }; return i; };
+    const varOpts = f => cfg.vars.filter(v => v.name && (!f || f(v))).map(v => [v.name, v.name + (v.type === 'liste' ? ' (liste)' : v.type === 'nombre' ? ' (nombre)' : ' (texte)')]);
+    // les variables
+    form.append(field('Onglets des écrans en haut de l\'appli', cfg, 'tabs', 'checkbox'));
+    const vb = el('div', 'stComp'); vb.append(el('span', 'label', 'Variables (les données gardées)'));
+    cfg.vars.forEach((v, i) => { const r = el('div', 'stRow'), x = el('button', 'btn px', '✕'); x.onclick = () => { cfg.vars.splice(i, 1); draw(); };
+      const n = inp(v, 'name', 'nom'); n.onchange = () => draw(); r.append(n, sel(v, 'type', [['nombre', 'Nombre'], ['texte', 'Texte'], ['liste', 'Liste']]));
+      if (v.type !== 'liste') r.append(inp(v, 'init', 'au départ', v.type === 'nombre' ? 'number' : 'text')); r.append(x); vb.append(r); });
+    const av = el('button', 'btn px', '+ VARIABLE'); av.onclick = () => { cfg.vars.push({name: 'variable' + (cfg.vars.length + 1), type: 'nombre', init: 0}); draw(); }; vb.append(av); form.append(vb);
+    // les écrans
+    const sb = el('div', 'stComp'), tabs = el('div', 'stScr'); sb.append(el('span', 'label', 'Écrans'));
+    cfg.screens.forEach((x, i) => { const b = el('button', 'btn px' + (i === edScr ? ' main' : ''), x.name || 'Écran ' + (i + 1)); b.onclick = () => { edScr = i; draw(); }; tabs.append(b); });
+    const as = el('button', 'btn px', '+ ÉCRAN'); as.onclick = () => { cfg.screens.push({name: 'Écran ' + (cfg.screens.length + 1), items: [{t: 'titre', text: 'Écran ' + (cfg.screens.length + 1)}]}); edScr = cfg.screens.length - 1; draw(); }; tabs.append(as);
+    const S = cfg.screens[edScr], sr = el('div', 'stRow'), sn = inp(S, 'name', 'nom de l\'écran'); sn.onchange = () => draw(); sr.append(sn);
+    if (cfg.screens.length > 1) { const d = el('button', 'btn px', 'SUPPRIMER L\'ÉCRAN'); d.onclick = () => { cfg.screens.splice(edScr, 1); edScr = 0; draw(); }; sr.append(d); }
+    sb.append(tabs, sr); form.append(sb);
+    // les composants de l'écran
+    S.items.forEach((it, i) => {
+      const c = el('div', 'stComp'), head = el('div', 'stRow'), up = el('button', 'btn px', '▲'), dn = el('button', 'btn px', '▼'), x = el('button', 'btn px', '✕');
+      up.onclick = () => move(S.items, i, -1); dn.onclick = () => move(S.items, i, 1); x.onclick = () => { S.items.splice(i, 1); draw(); };
+      head.append(el('b', '', (COMPS.find(k => k[0] === it.t)?.[1] || it.t).toUpperCase()), up, dn, x); c.append(head);
+      const r = el('div', 'stRow');
+      if (it.t === 'titre' || it.t === 'texte') r.append(inp(it, 'text', 'texte ; {variable} pour sa valeur'));
+      if (it.t === 'bouton') r.append(inp(it, 'text', 'texte du bouton'));
+      if (it.t === 'nombre') r.append(sel(it, 'v', varOpts(v => v.type !== 'liste')), inp(it, 'label', 'légende'));
+      if (it.t === 'champ') r.append(sel(it, 'v', varOpts()), inp(it, 'label', 'texte d\'aide'));
+      if (it.t === 'case') r.append(sel(it, 'v', varOpts(v => v.type !== 'liste')), inp(it, 'label', 'texte'));
+      if (it.t === 'liste') { const l = el('label', 'stCheck'), ck = el('input'); ck.type = 'checkbox'; ck.checked = !!it.check; ck.onchange = () => { it.check = ck.checked; draw.soft(); }; l.append(ck, 'cases à cocher'); r.append(sel(it, 'v', varOpts(v => v.type === 'liste')), l); }
+      if (it.t === 'image') { const f = el('input'); f.type = 'file'; f.accept = 'image/*'; f.onchange = async () => { const fl = f.files[0]; if (!fl) return; const im = new Image(); im.src = URL.createObjectURL(fl); await im.decode(); const k = Math.min(1, 480 / Math.max(im.naturalWidth, im.naturalHeight)), cv = document.createElement('canvas'); cv.width = im.naturalWidth * k; cv.height = im.naturalHeight * k; cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); it.src = cv.toDataURL('image/jpeg', .85); draw(); }; r.append(f); }
+      if (r.childNodes.length) c.append(r);
+      if (it.t === 'bouton') { it.blocks ??= []; c.append(el('span', 'hint', 'Quand on clique :'), blockList(it.blocks)); }
+      form.append(c);
+    });
+    const ar = el('div', 'stRow'), pick = el('select'); for (const [k, n] of COMPS) { const o = el('option', '', n); o.value = k; pick.append(o); }
+    const go = el('button', 'btn px main', '+ AJOUTER À L\'ÉCRAN'); go.onclick = () => { const t = pick.value, v = cfg.vars[0]?.name; S.items.push({t, text: t === 'bouton' ? 'Bouton' : t === 'titre' ? 'Titre' : t === 'texte' ? 'Du texte' : undefined, v, blocks: t === 'bouton' ? [] : undefined}); draw(); };
+    ar.append(pick, go); form.append(ar);
+    function blockList(arr) {
+      const box = el('div', 'stBlks');
+      arr.forEach((b, i) => { const r = el('div', 'stBlk ' + b.b), x = el('button', 'x', '✕'); x.title = 'Retirer ce bloc'; x.onclick = () => { arr.splice(i, 1); draw(); };
+        const line = b.b === 'si' ? el('div', 'stRow') : r, T = t => line.append(el('span', '', t));
+        if (b.b === 'ecran') { T('Aller à l\'écran'); line.append(sel(b, 's', cfg.screens.map((x, k) => [k, x.name || 'Écran ' + (k + 1)]))); }
+        if (b.b === 'ajoute') { T('Ajouter'); line.append(inp(b, 'n', '1')); T('à'); line.append(sel(b, 'v', varOpts(v => v.type === 'nombre'))); }
+        if (b.b === 'met') { T('Mettre'); line.append(sel(b, 'v', varOpts(v => v.type !== 'liste'))); T('à'); line.append(inp(b, 'val', 'valeur ou {variable}')); }
+        if (b.b === 'hasard') { T('Mettre'); line.append(sel(b, 'v', varOpts(v => v.type === 'nombre'))); T('au hasard entre'); line.append(inp(b, 'min', '1')); T('et'); line.append(inp(b, 'max', '6')); }
+        if (b.b === 'liste') { T('Ajouter'); line.append(inp(b, 'val', 'texte ou {variable}')); T('à la liste'); line.append(sel(b, 'v', varOpts(v => v.type === 'liste'))); }
+        if (b.b === 'vide') { T('Vider la liste'); line.append(sel(b, 'v', varOpts(v => v.type === 'liste'))); }
+        if (b.b === 'message') { T('Afficher'); line.append(inp(b, 'val', 'message, {variable}')); }
+        if (b.b === 'son') T('Jouer un bip');
+        if (b.b === 'lien') { T('Ouvrir le site'); line.append(inp(b, 'url', 'https://…')); }
+        if (b.b === 'si') { T('Si'); line.append(sel(b, 'v', varOpts()), sel(b, 'op', Object.keys(MK_OPS).map(o => [o, o])), inp(b, 'n', 'valeur')); T('alors'); line.append(x); b.then ??= []; r.append(line, blockList(b.then)); }
+        else r.append(x);
+        box.append(r); });
+      const add = el('select'), o0 = el('option', '', '+ bloc…'); o0.value = ''; add.append(o0); for (const [k, n] of BLOCKS) { const o = el('option', '', n); o.value = k; add.append(o); }
+      add.onchange = () => { const k = add.value; if (!k) return; const v = (k === 'liste' || k === 'vide' ? cfg.vars.find(x => x.type === 'liste') : k === 'met' || k === 'si' ? cfg.vars[0] : cfg.vars.find(x => x.type === 'nombre'))?.name;
+        arr.push({b: k, v, n: k === 'ajoute' ? 1 : k === 'si' ? 0 : undefined, op: k === 'si' ? '>=' : undefined, s: k === 'ecran' ? 0 : undefined, min: k === 'hasard' ? 1 : undefined, max: k === 'hasard' ? 6 : undefined, then: k === 'si' ? [] : undefined}); draw(); };
+      box.append(add); return box;
+    }
+  }
+  view.__st = {stPluginFiles, stZip, stIconPng, TEMPLATES, data, open: a => { cur = a; mode = 'edit'; draw(); }};  // pour le test « local »
   $('stNew').onclick = () => { cur = null; draw(); };
   widget(); startBg();
   ctx.onOpen(() => draw());

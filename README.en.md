@@ -4,11 +4,15 @@ Build your own small apps without writing code: pick a template, fill in a form,
 
 *Version française : [README.md](README.md)*
 
+## Block app and real plugins (new in 3.0.0)
+
+A twelfth template to make your own app: screens, buttons, lists, variables and action blocks (if … then, go to screen…). Every creation becomes a real .zip plugin to install from NeoStore.
+
 ## Create
 
 **+ New**, then pick a template. The form sits next to the preview, which updates with every letter you type. Each creation has its own title and colour, and is kept in **My creations**.
 
-## The eleven templates
+## The twelve templates
 
 - **Flashcards**: one card per line, "front | back". You see the front, **Show answer**, then **I knew it** or **Review again**. It uses the Leitner box system: a known card comes back 2, 4, 8, 16… days later (64 days at most); a missed card comes back the same day and starts over. **Review everything anyway** starts a free review of all the cards.
 - **Daily routine**: one task per line. The list unticks itself every morning; the streak counts the days when everything was ticked.
@@ -21,6 +25,12 @@ Build your own small apps without writing code: pick a template, fill in a form,
 - **Habit tracker**: one habit per line, the last 7 days as checkboxes and a streak for each.
 - **Checklist**: a list that keeps what you ticked (shopping, packing, to-do), with **Untick all**.
 - **Links page**: a grid of buttons to your favourite sites.
+
+## Block app and real plugins (3.0.0)
+
+- **Block app**: the twelfth template, to make your very own app. **Variables** keep the data (number, text or list). The app has **screens** (with tabs at the top if you want); each screen lines up components: title, text, big number, button, input field, checkbox, list (with checkboxes), image, line. Write `{variable}` in a text to show its value, `{list taille}` for the number of items.
+- Each **button** gets coloured **blocks**, run in order: go to a screen, add to a variable, set a variable to a value, random number, add to a list, empty a list, **if … then** (with its own blocks), show a message, play a beep, open a website.
+- **⇩ REAL PLUGIN**, on any creation: makes a complete NeoDex plugin (.zip with plugin.json, code, README and icon). Install it with **NeoStore → Installed → INSTALL A .ZIP FILE…** (NeoDex 3.4.2 or later): it has its own tab, icon and data, without the Studio. It is not verified by NeoDex, so it goes through the antivirus and stays in the sandbox. To publish it, put the files in a GitHub repository with the « neodex-plugin » topic.
 
 ## For each creation
 
